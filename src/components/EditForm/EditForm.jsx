@@ -1,5 +1,6 @@
 import { RiSaveLine } from 'react-icons/ri';
 import { MdOutlineCancel } from 'react-icons/md';
+import { Toaster } from 'react-hot-toast';
 import toast from 'react-hot-toast';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,6 +38,7 @@ const EditForm = () => {
 
   return (
     <form className={style.form} onSubmit={handleEdit}>
+      <Toaster />
       <input
         className={style.input}
         placeholder="What do you want to write?"

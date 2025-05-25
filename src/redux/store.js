@@ -35,7 +35,7 @@ const persistedFilterReducer = persistReducer(
 export const store = configureStore({
   reducer: {
     todos: persistedTodosReducer,
-    filters: persistedFilterReducer,
+    filter: persistedFilterReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

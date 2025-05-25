@@ -1,21 +1,28 @@
 import { FiSearch } from 'react-icons/fi';
-// import { useId } from 'react';
 import { nanoid } from 'nanoid';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 import { addTodo } from '../../redux/todoSlice';
 
 import style from './Form.module.css';
 
 const Form = () => {
-  // const todoId = useId();
+  const todos = useSelector(state => state.todos.items);
   const dispatch = useDispatch();
 
   const handleSubmit = event => {
     event.preventDefault();
     const inputValue = event.target.elements.search.value.trim();
 
-    if (!inputValue) return;
+    const isDublicate = todos.some(todo => todo.text === inputValue);
+
+    if (isDublicate) {
+      toast.error('Todo with the same text already exists!');
+      return;
+    }
 
     dispatch(
       addTodo({
@@ -29,6 +36,7 @@ const Form = () => {
 
   return (
     <form className={style.form} onSubmit={handleSubmit}>
+      <Toaster />
       <button className={style.button} type="submit">
         <FiSearch size="16px" />
       </button>
