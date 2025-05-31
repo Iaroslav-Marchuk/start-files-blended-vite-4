@@ -7,8 +7,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteTodo } from '../../redux/todoSlice';
 
 const TodoList = () => {
-  const todos = useSelector(state => state.todos.items);
   const dispatch = useDispatch();
+  const todos = useSelector(state => state.todos.items);
+  const filter = useSelector(state => state.filter.name);
+
+  const visibleTodos = todos.filter(todo =>
+    todo.text.toLowerCase().includes(filter.toLowerCase()),
+  );
 
   const handleDelete = id => {
     dispatch(deleteTodo(id));
@@ -16,7 +21,7 @@ const TodoList = () => {
 
   return (
     <Grid>
-      {todos.map((todoItem, index) => (
+      {visibleTodos.map((todoItem, index) => (
         <GridItem key={todoItem.id}>
           <Todo
             todoData={todoItem}
